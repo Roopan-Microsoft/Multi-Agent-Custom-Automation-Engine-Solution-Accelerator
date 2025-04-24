@@ -1,0 +1,926 @@
+{
+  "agent_name": "ProductAgent",
+  "system_message": "You are a Product agent. You have knowledge about product management, development, and compliance guidelines. When asked to call a function, you should summarize back what was done.",
+  "tools": [
+    {
+      "name": "add_mobile_extras_pack",
+      "description": "Add an extras pack/new product to the mobile plan for the customer. Requires exact extras pack name and start date.",
+      "parameters": [
+        {
+          "name": "new_extras_pack_name",
+          "description": "The exact name of the extras pack to add",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "start_date",
+          "description": "Start date in YYYY-MM-DD format",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "# Request to Add Extras Pack to Mobile Plan\n## New Plan:\n{new_extras_pack_name}\n## Start Date:\n{start_date}\n\nThese changes have been completed and should be reflected in your app in 5-10 minutes."
+    },
+    {
+      "name": "get_product_info",
+      "description": "Get information about available products and phone plans.",
+      "parameters": [],
+      "response_template": "Here is the requested product information with details on available plans and services."
+    },
+    {
+      "name": "get_billing_date",
+      "description": "Get information about the recurring billing date.",
+      "parameters": [
+        {
+          "name": "start_date",
+          "description": "Billing date in YYYY-MM-DD format",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Billing Date\nYour most recent billing date was **{start_date}**."
+    },
+    {
+      "name": "check_inventory",
+      "description": "Check the inventory level for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name to check",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Inventory Status\nInventory status for **'{product_name}'** checked."
+    },
+    {
+      "name": "update_inventory",
+      "description": "Update the inventory quantity for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name to update",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Quantity change (positive/negative)",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "## Inventory Update\nInventory for **'{product_name}'** updated by **{quantity}** units."
+    },
+    {
+      "name": "add_new_product",
+      "description": "Add a new product to the inventory.",
+      "parameters": [
+        {
+          "name": "product_details",
+          "description": "Details of the new product",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## New Product Added\nNew product added with details:\n{product_details}"
+    },
+    {
+      "name": "update_product_price",
+      "description": "Update the price of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "price",
+          "description": "New price",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "## Price Update\nPrice for **'{product_name}'** updated to **${price:.2f}**."
+    },
+    {
+      "name": "schedule_product_launch",
+      "description": "Schedule a product launch on a specific date.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "launch_date",
+          "description": "Launch date in YYYY-MM-DD format",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Launch Scheduled\nProduct **'{product_name}'** launch scheduled on **{launch_date}**."
+    },
+    {
+      "name": "analyze_sales_data",
+      "description": "Analyze sales data for a product over a given time period.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "time_period",
+          "description": "Time period (e.g., 'last month')",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Sales Data Analysis\nSales data for **'{product_name}'** over **{time_period}** analyzed."
+    },
+    {
+      "name": "get_customer_feedback",
+      "description": "Retrieve customer feedback for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Customer Feedback\nCustomer feedback for **'{product_name}'** retrieved."
+    },
+    {
+      "name": "manage_promotions",
+      "description": "Manage promotions for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "promotion_details",
+          "description": "Details of the promotion",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Promotion Managed\nPromotion for **'{product_name}'** managed with details:\n{promotion_details}"
+    },
+    {
+      "name": "coordinate_with_marketing",
+      "description": "Coordinate with the marketing team for a product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "campaign_details",
+          "description": "Marketing campaign details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Marketing Coordination\nCoordinated with marketing for **'{product_name}'** campaign:\n{campaign_details}"
+    },
+    {
+      "name": "review_product_quality",
+      "description": "Review the quality of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Quality Review\nQuality review for **'{product_name}'** completed."
+    },
+    {
+      "name": "handle_product_recall",
+      "description": "Handle a product recall for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "recall_reason",
+          "description": "Reason for recall",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Recall\nProduct recall for **'{product_name}'** initiated due to:\n{recall_reason}"
+    },
+    {
+      "name": "provide_product_recommendations",
+      "description": "Provide product recommendations based on customer preferences.",
+      "parameters": [
+        {
+          "name": "customer_preferences",
+          "description": "Customer preferences",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Recommendations\nProduct recommendations based on preferences **'{customer_preferences}'** provided."
+    },
+    {
+      "name": "generate_product_report",
+      "description": "Generate a report for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "report_type",
+          "description": "Report type",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## {report_type} Report\n{report_type} report for **'{product_name}'** generated."
+    },
+    {
+      "name": "manage_supply_chain",
+      "description": "Manage supply chain activities for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Supply Chain Management\nSupply chain for **'{product_name}'** managed with supplier **'{supplier_name}'**."
+    },
+    {
+      "name": "track_product_shipment",
+      "description": "Track the shipment of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tracking_number",
+          "description": "Tracking number",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Shipment Tracking\nShipment for **'{product_name}'** with tracking number **'{tracking_number}'** tracked."
+    },
+    {
+      "name": "set_reorder_level",
+      "description": "Set the reorder level for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "reorder_level",
+          "description": "Number of units at which to reorder",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "## Reorder Level Set\nReorder level for **'{product_name}'** set to **{reorder_level}** units."
+    },
+    {
+      "name": "monitor_market_trends",
+      "description": "Monitor market trends relevant to products.",
+      "parameters": [],
+      "response_template": "## Market Trends\nMarket trends monitored and data updated."
+    },
+    {
+      "name": "develop_new_product_ideas",
+      "description": "Develop new product ideas.",
+      "parameters": [
+        {
+          "name": "idea_details",
+          "description": "Details of the new product idea",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## New Product Idea\nNew product idea developed:\n{idea_details}"
+    },
+    {
+      "name": "collaborate_with_tech_team",
+      "description": "Collaborate with the tech team for product development.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "collaboration_details",
+          "description": "Technical collaboration details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Tech Team Collaboration\nCollaborated with tech team on **'{product_name}'**:\n{collaboration_details}"
+    },
+    {
+      "name": "update_product_description",
+      "description": "Update the description of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "description",
+          "description": "New description",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Description Updated\nDescription for **'{product_name}'** updated to:\n{description}"
+    },
+    {
+      "name": "set_product_discount",
+      "description": "Set a discount for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "discount_percentage",
+          "description": "Discount percentage",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "## Discount Set\nDiscount for **'{product_name}'** set to **{discount_percentage}%**."
+    },
+    {
+      "name": "manage_product_returns",
+      "description": "Manage returns for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "return_reason",
+          "description": "Reason for returning",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Return Managed\nReturn for **'{product_name}'** managed due to:\n{return_reason}"
+    },
+    {
+      "name": "conduct_product_survey",
+      "description": "Conduct a survey for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "survey_details",
+          "description": "Survey details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Survey Conducted\nSurvey for **'{product_name}'** conducted with details:\n{survey_details}"
+    },
+    {
+      "name": "handle_product_complaints",
+      "description": "Handle complaints for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "complaint_details",
+          "description": "Complaint details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Complaint Handled\nComplaint for **'{product_name}'** handled with details:\n{complaint_details}"
+    },
+    {
+      "name": "update_product_specifications",
+      "description": "Update the specifications for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "specifications",
+          "description": "Product specifications",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Specifications Updated\nSpecifications for **'{product_name}'** updated to:\n{specifications}"
+    },
+    {
+      "name": "organize_product_photoshoot",
+      "description": "Organize a photoshoot for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "photoshoot_date",
+          "description": "Photoshoot date",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Photoshoot Organized\nPhotoshoot for **'{product_name}'** organized on **{photoshoot_date}**."
+    },
+    {
+      "name": "manage_product_listing",
+      "description": "Manage the listing of a specific product on e-commerce platforms.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "listing_details",
+          "description": "Listing details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Listing Managed\nListing for **'{product_name}'** managed with details:\n{listing_details}"
+    },
+    {
+      "name": "set_product_availability",
+      "description": "Set the availability status of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "availability",
+          "description": "Availability status",
+          "type": "boolean",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Availability Set\nProduct **'{product_name}'** is now **{availability}**."
+    },
+    {
+      "name": "coordinate_with_logistics",
+      "description": "Coordinate with the logistics team for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "logistics_details",
+          "description": "Logistics details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Logistics Coordination\nCoordinated with logistics for **'{product_name}'** with details:\n{logistics_details}"
+    },
+    {
+      "name": "calculate_product_margin",
+      "description": "Calculate the profit margin for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "cost_price",
+          "description": "Cost price",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "selling_price",
+          "description": "Selling price",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "margin",
+          "description": "Profit margin percentage",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "## Profit Margin Calculated\nProfit margin for **'{product_name}'** calculated at **{margin:.2f}%**."
+    },
+    {
+      "name": "update_product_category",
+      "description": "Update the category of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "category",
+          "description": "New category",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Category Updated\nCategory for **'{product_name}'** updated to:\n{category}"
+    },
+    {
+      "name": "manage_product_bundles",
+      "description": "Manage product bundles.",
+      "parameters": [
+        {
+          "name": "bundle_name",
+          "description": "Bundle name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "product_list",
+          "description": "List of products",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "response_template": "## Product Bundle Managed\nProduct bundle **'{bundle_name}'** managed with products:\n{product_list}"
+    },
+    {
+      "name": "optimize_product_page",
+      "description": "Optimize the product page for better performance.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "optimization_details",
+          "description": "Optimization details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Page Optimized\nProduct page for **'{product_name}'** optimized with details:\n{optimization_details}"
+    },
+    {
+      "name": "monitor_product_performance",
+      "description": "Monitor the performance of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Performance Monitored\nPerformance for **'{product_name}'** monitored."
+    },
+    {
+      "name": "handle_product_pricing",
+      "description": "Handle pricing strategy for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "pricing_strategy",
+          "description": "Pricing strategy details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Pricing Strategy Set\nPricing strategy for **'{product_name}'** set to:\n{pricing_strategy}"
+    },
+    {
+      "name": "develop_product_training_material",
+      "description": "Develop training material for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "training_material",
+          "description": "Training material content",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Training Material Developed\nTraining material for **'{product_name}'** developed:\n{training_material}"
+    },
+    {
+      "name": "update_product_labels",
+      "description": "Update labels for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "label_details",
+          "description": "Label details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Labels Updated\nLabels for **'{product_name}'** updated with details:\n{label_details}"
+    },
+    {
+      "name": "manage_product_warranty",
+      "description": "Manage the warranty for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "warranty_details",
+          "description": "Warranty details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Warranty Managed\nWarranty for **'{product_name}'** managed with details:\n{warranty_details}"
+    },
+    {
+      "name": "forecast_product_demand",
+      "description": "Forecast demand for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "forecast_period",
+          "description": "Forecast period",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Demand Forecast\nDemand for **'{product_name}'** forecasted for **{forecast_period}**."
+    },
+    {
+      "name": "handle_product_licensing",
+      "description": "Handle licensing for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "licensing_details",
+          "description": "Licensing details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Licensing Handled\nLicensing for **'{product_name}'** handled with details:\n{licensing_details}"
+    },
+    {
+      "name": "manage_product_packaging",
+      "description": "Manage packaging for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "packaging_details",
+          "description": "Packaging details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Packaging Managed\nPackaging for **'{product_name}'** managed with details:\n{packaging_details}"
+    },
+    {
+      "name": "set_product_safety_standards",
+      "description": "Set safety standards for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "safety_standards",
+          "description": "Safety standards",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Safety Standards Set\nSafety standards for **'{product_name}'** set to:\n{safety_standards}"
+    },
+    {
+      "name": "develop_product_features",
+      "description": "Develop new features for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "features_details",
+          "description": "Features details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## New Features Developed\nFeatures for **'{product_name}'** developed with details:\n{features_details}"
+    },
+    {
+      "name": "evaluate_product_performance",
+      "description": "Evaluate the performance of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "evaluation_criteria",
+          "description": "Evaluation criteria",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Performance Evaluated\nPerformance of **'{product_name}'** evaluated based on:\n{evaluation_criteria}"
+    },
+    {
+      "name": "manage_custom_product_orders",
+      "description": "Manage custom orders for a specific product.",
+      "parameters": [
+        {
+          "name": "order_details",
+          "description": "Custom order details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Custom Product Order Managed\nCustom product order managed with details:\n{order_details}"
+    },
+    {
+      "name": "update_product_images",
+      "description": "Update images for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "image_urls",
+          "description": "List of image URLs",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "required": true
+        }
+      ],
+      "response_template": "## Product Images Updated\nImages for **'{product_name}'** updated:\n{image_urls}"
+    },
+    {
+      "name": "handle_product_obsolescence",
+      "description": "Handle the obsolescence of a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Obsolescence Handled\nObsolescence for **'{product_name}'** handled."
+    },
+    {
+      "name": "manage_product_sku",
+      "description": "Manage SKU for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "sku",
+          "description": "SKU",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## SKU Managed\nSKU for **'{product_name}'** managed:\n{sku}"
+    },
+    {
+      "name": "provide_product_training",
+      "description": "Provide training for a specific product.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Product name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "training_session_details",
+          "description": "Training session details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "## Product Training Provided\nTraining for **'{product_name}'** provided with details:\n{training_session_details}"
+    }
+  ]
+}

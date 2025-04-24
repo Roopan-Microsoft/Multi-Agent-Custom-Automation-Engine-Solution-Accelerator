@@ -1,0 +1,948 @@
+{
+  "agent_name": "ProcurementAgent",
+  "system_message": "You are a Procurement agent. You specialize in purchasing, vendor management, supply chain operations, and inventory control. You help with creating purchase orders, managing vendors, tracking orders, and ensuring efficient procurement processes.",
+  "tools": [
+    {
+      "name": "create_purchase_order",
+      "description": "Create a purchase order with specified vendor, items and amount.",
+      "parameters": [
+        {
+          "name": "vendor",
+          "description": "The name of the vendor",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "items",
+          "description": "The items being purchased",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "total_amount",
+          "description": "The total amount of the purchase order",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "##### Purchase Order Created\n**Vendor:** {vendor}\n**Items:** {items}\n**Total Amount:** ${total_amount:.2f}\n\nA purchase order has been successfully created and sent to the vendor."
+    },
+    {
+      "name": "check_vendor_status",
+      "description": "Check the status of a vendor in the system.",
+      "parameters": [
+        {
+          "name": "vendor",
+          "description": "The name of the vendor",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Vendor Status\n**Vendor:** {vendor}\n**Status:** Active\n\nThe vendor status has been checked."
+    },
+    {
+      "name": "get_vendor_list",
+      "description": "Get a list of all approved vendors.",
+      "parameters": [],
+      "response_template": "##### Vendor List\n\n- Acme Corp (General Supplies) - Rating: A\n- Globex (Technology) - Rating: A+\n- Initech (Office Supplies) - Rating: B\n- Umbrella Corp (Research Equipment) - Rating: C\n\nThe vendor list has been retrieved."
+    },
+    {
+      "name": "update_vendor_information",
+      "description": "Update information for a specific vendor.",
+      "parameters": [
+        {
+          "name": "vendor",
+          "description": "The name of the vendor",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "field",
+          "description": "The field to update",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "value",
+          "description": "The new value for the field",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Vendor Information Updated\n**Vendor:** {vendor}\n**Field Updated:** {field}\n**New Value:** {value}\n\nThe vendor information has been successfully updated."
+    },
+    {
+      "name": "track_order",
+      "description": "Track the status of an order using the order ID.",
+      "parameters": [
+        {
+          "name": "order_number",
+          "description": "Order number",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Order {order_number} is currently in transit."
+    },
+    {
+      "name": "approve_invoice",
+      "description": "Approve an invoice for payment.",
+      "parameters": [
+        {
+          "name": "invoice_number",
+          "description": "Invoice number",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Invoice {invoice_number} approved for payment."
+    },
+    {
+      "name": "evaluate_vendor_performance",
+      "description": "Evaluate the performance of a vendor based on specified criteria.",
+      "parameters": [
+        {
+          "name": "vendor",
+          "description": "The name of the vendor",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "criteria",
+          "description": "The criteria for evaluation",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Vendor Performance Evaluation\n**Vendor:** {vendor}\n**Criteria:** {criteria}\n**Rating:** Good\n\nThe vendor performance has been evaluated."
+    },
+    {
+      "name": "manage_inventory_levels",
+      "description": "Manage inventory levels for an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "action",
+          "description": "Action to perform on inventory levels",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Inventory levels for {item_name} have been {action}."
+    },
+    {
+      "name": "request_for_proposal",
+      "description": "Create a Request for Proposal (RFP) for a project.",
+      "parameters": [
+        {
+          "name": "project",
+          "description": "The name of the project",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "requirements",
+          "description": "The requirements for the project",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "deadline",
+          "description": "The submission deadline for the RFP",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Request for Proposal Created\n**Project:** {project}\n**Requirements:** {requirements}\n**Submission Deadline:** {deadline}\n\nA Request for Proposal has been created and is ready for distribution to potential vendors."
+    },
+    {
+      "name": "source_new_supplier",
+      "description": "Source a new supplier for an item based on requirements.",
+      "parameters": [
+        {
+          "name": "item",
+          "description": "The item to source",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "requirements",
+          "description": "The requirements for the supplier",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### New Supplier Sourcing\n**Item:** {item}\n**Requirements:** {requirements}\n\nPotential suppliers have been identified and will be contacted for quotes."
+    },
+    {
+      "name": "order_hardware",
+      "description": "Order hardware items like laptops, monitors, etc.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Quantity to order",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Ordered {quantity} units of {item_name}."
+    },
+    {
+      "name": "order_software_license",
+      "description": "Order software licenses.",
+      "parameters": [
+        {
+          "name": "software_name",
+          "description": "Name of the software",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "license_type",
+          "description": "Type of license",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Quantity of licenses",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Ordered {quantity} {license_type} licenses of {software_name}."
+    },
+    {
+      "name": "check_inventory",
+      "description": "Check the inventory status of an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Inventory status of {item_name}: In Stock."
+    },
+    {
+      "name": "process_purchase_order",
+      "description": "Process a purchase order.",
+      "parameters": [
+        {
+          "name": "po_number",
+          "description": "Purchase order number",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Purchase Order {po_number} has been processed."
+    },
+    {
+      "name": "initiate_contract_negotiation",
+      "description": "Initiate contract negotiation with a vendor.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "contract_details",
+          "description": "Contract details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Contract negotiation initiated with {vendor_name}: {contract_details}"
+    },
+    {
+      "name": "manage_vendor_relationship",
+      "description": "Manage relationships with vendors.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "action",
+          "description": "Action to perform on the vendor relationship",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Vendor relationship with {vendor_name} has been {action}."
+    },
+    {
+      "name": "update_procurement_policy",
+      "description": "Update a procurement policy.",
+      "parameters": [
+        {
+          "name": "policy_name",
+          "description": "Policy name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "policy_content",
+          "description": "Policy content",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Procurement policy '{policy_name}' updated."
+    },
+    {
+      "name": "generate_procurement_report",
+      "description": "Generate a procurement report.",
+      "parameters": [
+        {
+          "name": "report_type",
+          "description": "Type of report",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Generated {report_type} procurement report."
+    },
+    {
+      "name": "evaluate_supplier_performance",
+      "description": "Evaluate the performance of a supplier.",
+      "parameters": [
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Performance evaluation for supplier {supplier_name} completed."
+    },
+    {
+      "name": "handle_return",
+      "description": "Handle the return of procured items.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Quantity to return",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "reason",
+          "description": "Reason for return",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Processed return of {quantity} units of {item_name} due to {reason}."
+    },
+    {
+      "name": "process_payment",
+      "description": "Process payment to a vendor.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "Payment amount",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Processed payment of ${amount:.2f} to {vendor_name}."
+    },
+    {
+      "name": "request_quote",
+      "description": "Request a quote for items.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Quantity",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Requested quote for {quantity} units of {item_name}."
+    },
+    {
+      "name": "recommend_sourcing_options",
+      "description": "Recommend sourcing options for an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Sourcing options for {item_name} have been provided."
+    },
+    {
+      "name": "update_asset_register",
+      "description": "Update the asset register with new or disposed assets.",
+      "parameters": [
+        {
+          "name": "asset_name",
+          "description": "Asset name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "asset_details",
+          "description": "Details of the asset",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Asset register updated for {asset_name}: {asset_details}"
+    },
+    {
+      "name": "manage_leasing_agreements",
+      "description": "Manage leasing agreements for assets.",
+      "parameters": [
+        {
+          "name": "agreement_details",
+          "description": "Details of the leasing agreement",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Leasing agreement processed: {agreement_details}"
+    },
+    {
+      "name": "conduct_market_research",
+      "description": "Conduct market research for procurement purposes.",
+      "parameters": [
+        {
+          "name": "category",
+          "description": "Research category",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Market research conducted for category: {category}"
+    },
+    {
+      "name": "schedule_maintenance",
+      "description": "Schedule maintenance for equipment.",
+      "parameters": [
+        {
+          "name": "equipment_name",
+          "description": "Equipment name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "maintenance_date",
+          "description": "Maintenance date",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Scheduled maintenance for {equipment_name} on {maintenance_date}."
+    },
+    {
+      "name": "audit_inventory",
+      "description": "Conduct an inventory audit.",
+      "parameters": [],
+      "response_template": "Inventory audit has been conducted."
+    },
+    {
+      "name": "approve_budget",
+      "description": "Approve a procurement budget.",
+      "parameters": [
+        {
+          "name": "budget_id",
+          "description": "Budget ID",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "Amount",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Approved budget ID {budget_id} for amount ${amount:.2f}."
+    },
+    {
+      "name": "manage_warranty",
+      "description": "Manage warranties for procured items.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "warranty_period",
+          "description": "Warranty period",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Warranty for {item_name} managed for period {warranty_period}."
+    },
+    {
+      "name": "handle_customs_clearance",
+      "description": "Handle customs clearance for international shipments.",
+      "parameters": [
+        {
+          "name": "shipment_id",
+          "description": "Shipment ID",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Customs clearance for shipment ID {shipment_id} handled."
+    },
+    {
+      "name": "negotiate_discount",
+      "description": "Negotiate a discount with a vendor.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "discount_percentage",
+          "description": "Discount percentage",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Negotiated a {discount_percentage}% discount with vendor {vendor_name}."
+    },
+    {
+      "name": "register_new_vendor",
+      "description": "Register a new vendor.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "vendor_details",
+          "description": "Vendor details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "New vendor {vendor_name} registered with details: {vendor_details}."
+    },
+    {
+      "name": "decommission_asset",
+      "description": "Decommission an asset.",
+      "parameters": [
+        {
+          "name": "asset_name",
+          "description": "Asset name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Asset {asset_name} has been decommissioned."
+    },
+    {
+      "name": "schedule_training",
+      "description": "Schedule a training session for procurement staff.",
+      "parameters": [
+        {
+          "name": "session_name",
+          "description": "Session name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date",
+          "description": "Session date",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Training session '{session_name}' scheduled on {date}."
+    },
+    {
+      "name": "update_vendor_rating",
+      "description": "Update the rating of a vendor.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "rating",
+          "description": "New rating",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Vendor {vendor_name} rating updated to {rating}."
+    },
+    {
+      "name": "handle_recall",
+      "description": "Handle the recall of a procured item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "recall_reason",
+          "description": "Reason for recall",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Recall of {item_name} due to {recall_reason} handled."
+    },
+    {
+      "name": "request_samples",
+      "description": "Request samples of an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Number of samples",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Requested {quantity} samples of {item_name}."
+    },
+    {
+      "name": "manage_subscription",
+      "description": "Manage subscriptions to services.",
+      "parameters": [
+        {
+          "name": "service_name",
+          "description": "Service name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "action",
+          "description": "Action to perform",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Subscription to {service_name} has been {action}."
+    },
+    {
+      "name": "verify_supplier_certification",
+      "description": "Verify the certification status of a supplier.",
+      "parameters": [
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Certification status of supplier {supplier_name} verified."
+    },
+    {
+      "name": "conduct_supplier_audit",
+      "description": "Conduct an audit of a supplier.",
+      "parameters": [
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Audit of supplier {supplier_name} conducted."
+    },
+    {
+      "name": "manage_import_licenses",
+      "description": "Manage import licenses for items.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "license_details",
+          "description": "License details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Import license for {item_name} managed: {license_details}."
+    },
+    {
+      "name": "conduct_cost_analysis",
+      "description": "Conduct a cost analysis for an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Cost analysis for {item_name} conducted."
+    },
+    {
+      "name": "evaluate_risk_factors",
+      "description": "Evaluate risk factors associated with procuring an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Risk factors for {item_name} evaluated."
+    },
+    {
+      "name": "manage_green_procurement_policy",
+      "description": "Manage green procurement policy.",
+      "parameters": [
+        {
+          "name": "policy_details",
+          "description": "Policy details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Green procurement policy managed: {policy_details}."
+    },
+    {
+      "name": "update_supplier_database",
+      "description": "Update the supplier database with new information.",
+      "parameters": [
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "supplier_info",
+          "description": "Supplier information",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Supplier database updated for {supplier_name}: {supplier_info}."
+    },
+    {
+      "name": "handle_dispute_resolution",
+      "description": "Handle dispute resolution with a vendor.",
+      "parameters": [
+        {
+          "name": "vendor_name",
+          "description": "Vendor name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "issue",
+          "description": "Issue to resolve",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Dispute with vendor {vendor_name} over issue '{issue}' resolved."
+    },
+    {
+      "name": "assess_compliance",
+      "description": "Assess compliance of an item with standards.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "compliance_standards",
+          "description": "Standards to assess against",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Compliance of {item_name} with standards '{compliance_standards}' assessed."
+    },
+    {
+      "name": "manage_reverse_logistics",
+      "description": "Manage reverse logistics for returning items.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "quantity",
+          "description": "Quantity to return",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Reverse logistics managed for {quantity} units of {item_name}."
+    },
+    {
+      "name": "verify_delivery",
+      "description": "Verify delivery status of an item.",
+      "parameters": [
+        {
+          "name": "item_name",
+          "description": "Name of the item",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "delivery_status",
+          "description": "Delivery status",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Delivery status of {item_name} verified as {delivery_status}."
+    },
+    {
+      "name": "handle_procurement_risk_assessment",
+      "description": "Handle procurement risk assessment.",
+      "parameters": [
+        {
+          "name": "risk_details",
+          "description": "Details of the risk",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Procurement risk assessment handled: {risk_details}."
+    },
+    {
+      "name": "manage_supplier_contract",
+      "description": "Manage supplier contract actions.",
+      "parameters": [
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "contract_action",
+          "description": "Contract action to perform",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Supplier contract with {supplier_name} has been {contract_action}."
+    },
+    {
+      "name": "allocate_budget",
+      "description": "Allocate budget to a department.",
+      "parameters": [
+        {
+          "name": "department_name",
+          "description": "Department name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "budget_amount",
+          "description": "Budget amount",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "Allocated budget of ${budget_amount:.2f} to {department_name}."
+    },
+    {
+      "name": "track_procurement_metrics",
+      "description": "Track procurement metrics.",
+      "parameters": [
+        {
+          "name": "metric_name",
+          "description": "Metric name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Procurement metric '{metric_name}' tracked."
+    },
+    {
+      "name": "conduct_supplier_survey",
+      "description": "Conduct a survey of a supplier.",
+      "parameters": [
+        {
+          "name": "supplier_name",
+          "description": "Supplier name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Survey of supplier {supplier_name} conducted."
+    },
+    {
+      "name": "get_procurement_information",
+      "description": "Get procurement information, such as policies, procedures, and guidelines.",
+      "parameters": [
+        {
+          "name": "query",
+          "description": "The query for the procurement knowledgebase",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Procurement information for '{query}' retrieved."
+    }
+  ]
+}

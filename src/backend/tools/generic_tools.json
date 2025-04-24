@@ -1,0 +1,12 @@
+{
+  "agent_name": "GenericAgent",
+  "system_message": "You are a Generic agent that can help with general questions and provide basic information. You can search for information and perform simple calculations.",
+  "tools": [
+    {
+      "name": "dummy_function",
+      "description": "This is a placeholder",
+      "parameters": [],
+      "response_template": "This is a placeholder function"
+    }
+  ]
+}

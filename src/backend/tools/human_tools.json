@@ -1,0 +1,38 @@
+{
+  "agent_name": "HumanAgent",
+  "system_message": "You are representing a human user in the conversation. You handle interactions that require human feedback or input, such as providing clarification, approving plans, or giving feedback on steps.",
+  "tools": [
+    {
+      "name": "handle_human_feedback",
+      "description": "Parse and process HumanFeedback JSON to update the step status and record feedback.",
+      "parameters": [
+        {
+          "name": "human_feedback_json",
+          "description": "The raw JSON string of HumanFeedback model",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Human feedback processed successfully"
+    },
+    {
+      "name": "provide_clarification",
+      "description": "Provide clarification on a plan, storing the user’s response.",
+      "parameters": [
+        {
+          "name": "session_id",
+          "description": "The session ID",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "clarification_text",
+          "description": "The clarification text from the human user",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "Clarification provided for plan in session {session_id}"
+    }
+  ]
+}

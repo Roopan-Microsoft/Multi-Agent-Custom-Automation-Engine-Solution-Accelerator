@@ -1,0 +1,534 @@
+{
+  "agent_name": "HrAgent",
+  "system_message": "You are an AI Agent. You have knowledge about HR (e.g., human resources), policies, procedures, and onboarding guidelines.",
+  "tools": [
+    {
+      "name": "get_hr_information",
+      "description": "Get HR information, such as policies, procedures, and onboarding guidelines.",
+      "parameters": [
+        {
+          "name": "query",
+          "description": "The query for the HR knowledgebase",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### HR Information\n\n**Document Name:** Contoso's Employee Onboarding Procedure\n**Domain:** HR Policy\n**Description:** A step-by-step guide detailing the onboarding process for new Contoso employees, from initial orientation to role-specific training."
+    },
+    {
+      "name": "schedule_orientation_session",
+      "description": "Schedule an orientation session for a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date",
+          "description": "The date for the orientation session",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Orientation Session Scheduled\n**Employee Name:** {employee_name}\n**Date:** {date}\n\nYour orientation session has been successfully scheduled. Please mark your calendar and be prepared for an informative session."
+    },
+    {
+      "name": "assign_mentor",
+      "description": "Assign a mentor to a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Mentor Assigned\n**Employee Name:** {employee_name}\n\nA mentor has been assigned to you. They will guide you through your onboarding process and help you settle into your new role."
+    },
+    {
+      "name": "register_for_benefits",
+      "description": "Register a new employee for benefits.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Benefits Registration\n**Employee Name:** {employee_name}\n\nYou have been successfully registered for benefits. Please review your benefits package and reach out if you have any questions."
+    },
+    {
+      "name": "enroll_in_training_program",
+      "description": "Enroll an employee in a training program.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "program_name",
+          "description": "The name of the training program",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Training Program Enrollment\n**Employee Name:** {employee_name}\n**Program Name:** {program_name}\n\nYou have been enrolled in the training program. Please check your email for further details and instructions."
+    },
+    {
+      "name": "provide_employee_handbook",
+      "description": "Provide the employee handbook to a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Employee Handbook Provided\n**Employee Name:** {employee_name}\n\nThe employee handbook has been provided to you. Please review it to familiarize yourself with company policies and procedures."
+    },
+    {
+      "name": "update_employee_record",
+      "description": "Update a specific field in an employee's record.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "field",
+          "description": "The field to update",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "value",
+          "description": "The new value for the field",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Employee Record Updated\n**Employee Name:** {employee_name}\n**Field Updated:** {field}\n**New Value:** {value}\n\nYour employee record has been successfully updated."
+    },
+    {
+      "name": "request_id_card",
+      "description": "Request an ID card for a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### ID Card Request\n**Employee Name:** {employee_name}\n\nYour request for an ID card has been successfully submitted. Please allow 3-5 business days for processing. You will be notified once your ID card is ready for pickup."
+    },
+    {
+      "name": "set_up_payroll",
+      "description": "Set up payroll for a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Payroll Setup\n**Employee Name:** {employee_name}\n\nYour payroll has been successfully set up. Please review your payroll details and ensure everything is correct."
+    },
+    {
+      "name": "add_emergency_contact",
+      "description": "Add emergency contact information for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "contact_name",
+          "description": "The name of the emergency contact",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "contact_phone",
+          "description": "The phone number of the emergency contact",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Emergency Contact Added\n**Employee Name:** {employee_name}\n**Contact Name:** {contact_name}\n**Contact Phone:** {contact_phone}\n\nYour emergency contact information has been successfully added."
+    },
+    {
+      "name": "process_leave_request",
+      "description": "Process a leave request for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "leave_type",
+          "description": "The type of leave",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "start_date",
+          "description": "The start date of the leave",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "end_date",
+          "description": "The end date of the leave",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Leave Request Processed\n**Employee Name:** {employee_name}\n**Leave Type:** {leave_type}\n**Start Date:** {start_date}\n**End Date:** {end_date}\n\nYour leave request has been processed. Please ensure you have completed any necessary handover tasks before your leave."
+    },
+    {
+      "name": "update_policies",
+      "description": "Update company policies.",
+      "parameters": [
+        {
+          "name": "policy_name",
+          "description": "The name of the policy to update",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "policy_content",
+          "description": "The new content for the policy",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Policy Updated\n**Policy Name:** {policy_name}\n\nThe policy has been updated with the following content:\n\n{policy_content}"
+    },
+    {
+      "name": "conduct_exit_interview",
+      "description": "Conduct an exit interview for an employee leaving the company.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Exit Interview Conducted\n**Employee Name:** {employee_name}\n\nThe exit interview has been conducted. Thank you for your feedback and contributions to the company."
+    },
+    {
+      "name": "verify_employment",
+      "description": "Verify employment status for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Employment Verification\n**Employee Name:** {employee_name}\n\nThe employment status of {employee_name} has been verified."
+    },
+    {
+      "name": "schedule_performance_review",
+      "description": "Schedule a performance review for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date",
+          "description": "The date for the performance review",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Performance Review Scheduled\n**Employee Name:** {employee_name}\n**Date:** {date}\n\nYour performance review has been scheduled. Please prepare any necessary documents and be ready for the review."
+    },
+    {
+      "name": "approve_expense_claim",
+      "description": "Approve an expense claim for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "claim_amount",
+          "description": "The amount of the expense claim",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "##### Expense Claim Approved\n**Employee Name:** {employee_name}\n**Claim Amount:** ${claim_amount:.2f}\n\nYour expense claim has been approved. The amount will be reimbursed in your next payroll."
+    },
+    {
+      "name": "send_company_announcement",
+      "description": "Send a company-wide announcement.",
+      "parameters": [
+        {
+          "name": "subject",
+          "description": "The subject of the announcement",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "content",
+          "description": "The content of the announcement",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Company Announcement\n**Subject:** {subject}\n\n{content}"
+    },
+    {
+      "name": "fetch_employee_directory",
+      "description": "Retrieve the employee directory.",
+      "parameters": [],
+      "response_template": "##### Employee Directory\n\nThe employee directory has been retrieved."
+    },
+    {
+      "name": "initiate_background_check",
+      "description": "Initiate a background check for a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Background Check Initiated\n**Employee Name:** {employee_name}\n\nA background check has been initiated for {employee_name}. You will be notified once the check is complete."
+    },
+    {
+      "name": "organize_team_building_activity",
+      "description": "Organize a team-building activity.",
+      "parameters": [
+        {
+          "name": "activity_name",
+          "description": "The name of the activity",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date",
+          "description": "The date for the activity",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Team-Building Activity Organized\n**Activity Name:** {activity_name}\n**Date:** {date}\n\nThe team-building activity has been successfully organized. Please join us on {date} for a fun and engaging experience."
+    },
+    {
+      "name": "manage_employee_transfer",
+      "description": "Manage an employee transfer between departments.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "new_department",
+          "description": "The new department for the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Employee Transfer\n**Employee Name:** {employee_name}\n**New Department:** {new_department}\n\nThe transfer has been successfully processed. {employee_name} is now part of the {new_department} department."
+    },
+    {
+      "name": "track_employee_attendance",
+      "description": "Track attendance for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Attendance Tracked\n**Employee Name:** {employee_name}\n\nThe attendance for {employee_name} has been successfully tracked."
+    },
+    {
+      "name": "organize_health_and_wellness_program",
+      "description": "Organize a health and wellness program.",
+      "parameters": [
+        {
+          "name": "program_name",
+          "description": "The name of the health and wellness program",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date",
+          "description": "The date for the program",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Health and Wellness Program Organized\n**Program Name:** {program_name}\n**Date:** {date}\n\nThe health and wellness program has been successfully organized for {date}."
+    },
+    {
+      "name": "facilitate_remote_work_setup",
+      "description": "Facilitate the setup for remote work for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Remote Work Setup Facilitated\n**Employee Name:** {employee_name}\n\nThe remote work setup has been successfully facilitated for {employee_name}. Please ensure you have all the necessary equipment and access."
+    },
+    {
+      "name": "manage_retirement_plan",
+      "description": "Manage the retirement plan for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Retirement Plan Managed\n**Employee Name:** {employee_name}\n\nThe retirement plan for {employee_name} has been successfully managed."
+    },
+    {
+      "name": "handle_overtime_request",
+      "description": "Handle an overtime request for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "hours",
+          "description": "The number of overtime hours",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "##### Overtime Request Handled\n**Employee Name:** {employee_name}\n**Hours:** {hours}\n\nThe overtime request for {employee_name} has been successfully handled."
+    },
+    {
+      "name": "issue_bonus",
+      "description": "Issue a bonus to an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "description": "The bonus amount",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "##### Bonus Issued\n**Employee Name:** {employee_name}\n**Amount:** ${amount:.2f}\n\nA bonus of ${amount:.2f} has been issued to {employee_name}."
+    },
+    {
+      "name": "schedule_wellness_check",
+      "description": "Schedule a wellness check for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "date",
+          "description": "The date for the wellness check",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Wellness Check Scheduled\n**Employee Name:** {employee_name}\n**Date:** {date}\n\nA wellness check has been scheduled for {employee_name} on {date}."
+    },
+    {
+      "name": "handle_employee_suggestion",
+      "description": "Handle a suggestion made by an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "suggestion",
+          "description": "The suggestion from the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Employee Suggestion Handled\n**Employee Name:** {employee_name}\n**Suggestion:** {suggestion}\n\nThe suggestion from {employee_name} has been successfully handled."
+    },
+    {
+      "name": "update_employee_privileges",
+      "description": "Update privileges for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "The name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "privilege",
+          "description": "The privilege to update",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "status",
+          "description": "The new status of the privilege",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Employee Privileges Updated\n**Employee Name:** {employee_name}\n**Privilege:** {privilege}\n**Status:** {status}\n\nThe privileges for {employee_name} have been successfully updated."
+    },
+    {
+      "name": "send_email",
+      "description": "Send a welcome email to an address.",
+      "parameters": [
+        {
+          "name": "emailaddress",
+          "description": "The email address to send to",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Welcome Email Sent\n**Email Address:** {emailaddress}\n\nA welcome email has been sent to {emailaddress}."
+    }
+  ]
+}

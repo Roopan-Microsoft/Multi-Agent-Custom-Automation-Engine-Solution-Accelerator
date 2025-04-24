@@ -1,0 +1,416 @@
+{
+  "agent_name": "TechSupportAgent",
+  "system_message": "You are a Tech Support agent. You specialize in IT troubleshooting, system administration, network issues, software installation, and general technical support. You help users resolve technology-related problems and provide technical guidance.",
+  "tools": [
+    {
+      "name": "send_welcome_email",
+      "description": "Send a welcome email to a new employee as part of onboarding.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the new employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "email_address",
+          "description": "Email address of the new employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Welcome Email Sent\n**Employee Name:** {employee_name}\n**Email Address:** {email_address}\n\nA welcome email has been successfully sent to {employee_name} at {email_address}."
+    },
+    {
+      "name": "set_up_office_365_account",
+      "description": "Set up an Office 365 account for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "email_address",
+          "description": "Email address for the Office 365 account",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Office 365 Account Setup\n**Employee Name:** {employee_name}\n**Email Address:** {email_address}\n\nAn Office 365 account has been successfully set up for {employee_name} at {email_address}."
+    },
+    {
+      "name": "configure_laptop",
+      "description": "Configure a laptop for a new employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "laptop_model",
+          "description": "Model of the laptop",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Laptop Configuration\n**Employee Name:** {employee_name}\n**Laptop Model:** {laptop_model}\n\nThe laptop {laptop_model} has been successfully configured for {employee_name}."
+    },
+    {
+      "name": "reset_password",
+      "description": "Reset the password for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Password Reset\n**Employee Name:** {employee_name}\n\nThe password for {employee_name} has been successfully reset."
+    },
+    {
+      "name": "setup_vpn_access",
+      "description": "Set up VPN access for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### VPN Access Setup\n**Employee Name:** {employee_name}\n\nVPN access has been successfully set up for {employee_name}."
+    },
+    {
+      "name": "troubleshoot_network_issue",
+      "description": "Assist in troubleshooting network issues reported.",
+      "parameters": [
+        {
+          "name": "issue_description",
+          "description": "Description of the network issue",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Network Issue Resolved\n**Issue Description:** {issue_description}\n\nThe network issue described as '{issue_description}' has been successfully resolved."
+    },
+    {
+      "name": "install_software",
+      "description": "Install software for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "software_name",
+          "description": "Name of the software",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Software Installation\n**Employee Name:** {employee_name}\n**Software Name:** {software_name}\n\nThe software '{software_name}' has been successfully installed for {employee_name}."
+    },
+    {
+      "name": "update_software",
+      "description": "Update software for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "software_name",
+          "description": "Name of the software",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Software Update\n**Employee Name:** {employee_name}\n**Software Name:** {software_name}\n\nThe software '{software_name}' has been successfully updated for {employee_name}."
+    },
+    {
+      "name": "manage_data_backup",
+      "description": "Manage data backup for an employee's device.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Name of the employee",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Data Backup Managed\n**Employee Name:** {employee_name}\n\nData backup has been successfully configured for {employee_name}."
+    },
+    {
+      "name": "handle_cybersecurity_incident",
+      "description": "Handle a reported cybersecurity incident.",
+      "parameters": [
+        {
+          "name": "incident_details",
+          "description": "Details of the incident",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Cybersecurity Incident Handled\n**Incident Details:** {incident_details}\n\nThe cybersecurity incident described as '{incident_details}' has been successfully handled."
+    },
+    {
+      "name": "assist_procurement_with_tech_equipment",
+      "description": "Assist procurement with technical specifications of equipment.",
+      "parameters": [
+        {
+          "name": "equipment_details",
+          "description": "Technical specification details",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Technical Specifications Provided\n**Equipment Details:** {equipment_details}\n\nTechnical specifications for the following equipment have been provided: {equipment_details}."
+    },
+    {
+      "name": "collaborate_with_code_deployment",
+      "description": "Collaborate with CodeAgent for code deployment.",
+      "parameters": [
+        {
+          "name": "project_name",
+          "description": "Project name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Code Deployment Collaboration\n**Project Name:** {project_name}\n\nCollaboration on the deployment of project '{project_name}' has been successfully completed."
+    },
+    {
+      "name": "provide_tech_support_for_marketing",
+      "description": "Provide technical support for a marketing campaign.",
+      "parameters": [
+        {
+          "name": "campaign_name",
+          "description": "Name of the campaign",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Tech Support for Marketing Campaign\n**Campaign Name:** {campaign_name}\n\nTechnical support has been successfully provided for the marketing campaign '{campaign_name}'."
+    },
+    {
+      "name": "assist_product_launch",
+      "description": "Provide tech support for a new product launch.",
+      "parameters": [
+        {
+          "name": "product_name",
+          "description": "Name of the product",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Tech Support for Product Launch\n**Product Name:** {product_name}\n\nTechnical support has been successfully provided for the product launch of '{product_name}'."
+    },
+    {
+      "name": "implement_it_policy",
+      "description": "Implement and manage an IT policy.",
+      "parameters": [
+        {
+          "name": "policy_name",
+          "description": "IT policy name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### IT Policy Implemented\n**Policy Name:** {policy_name}\n\nThe IT policy '{policy_name}' has been successfully implemented."
+    },
+    {
+      "name": "manage_cloud_service",
+      "description": "Manage cloud services used by the company.",
+      "parameters": [
+        {
+          "name": "service_name",
+          "description": "Cloud service name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Cloud Service Managed\n**Service Name:** {service_name}\n\nThe cloud service '{service_name}' has been successfully managed."
+    },
+    {
+      "name": "configure_server",
+      "description": "Configure a server.",
+      "parameters": [
+        {
+          "name": "server_name",
+          "description": "Server name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Server Configuration\n**Server Name:** {server_name}\n\nThe server '{server_name}' has been successfully configured."
+    },
+    {
+      "name": "grant_database_access",
+      "description": "Grant database access to an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Employee name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "database_name",
+          "description": "Database name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Database Access Granted\n**Employee Name:** {employee_name}\n**Database Name:** {database_name}\n\nAccess to the database '{database_name}' has been successfully granted to {employee_name}."
+    },
+    {
+      "name": "provide_tech_training",
+      "description": "Provide technical training on new tools.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Employee name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "tool_name",
+          "description": "Tool name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Tech Training Provided\n**Employee Name:** {employee_name}\n**Tool Name:** {tool_name}\n\nTechnical training on '{tool_name}' has been successfully provided to {employee_name}."
+    },
+    {
+      "name": "resolve_technical_issue",
+      "description": "Resolve general technical issues reported by employees.",
+      "parameters": [
+        {
+          "name": "issue_description",
+          "description": "Issue description",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Technical Issue Resolved\n**Issue Description:** {issue_description}\n\nThe technical issue described as '{issue_description}' has been successfully resolved."
+    },
+    {
+      "name": "configure_printer",
+      "description": "Configure a printer for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Employee name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "printer_model",
+          "description": "Printer model",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Printer Configuration\n**Employee Name:** {employee_name}\n**Printer Model:** {printer_model}\n\nThe printer '{printer_model}' has been successfully configured for {employee_name}."
+    },
+    {
+      "name": "set_up_email_signature",
+      "description": "Set up an email signature for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Employee name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "signature",
+          "description": "Email signature content",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Email Signature Setup\n**Employee Name:** {employee_name}\n**Signature:** {signature}\n\nThe email signature for {employee_name} has been successfully set up as '{signature}'."
+    },
+    {
+      "name": "configure_mobile_device",
+      "description": "Configure a mobile device for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Employee name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "device_model",
+          "description": "Device model",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Mobile Device Configuration\n**Employee Name:** {employee_name}\n**Device Model:** {device_model}\n\nThe mobile device '{device_model}' has been successfully configured for {employee_name}."
+    },
+    {
+      "name": "manage_software_licenses",
+      "description": "Manage software licenses for a specific software.",
+      "parameters": [
+        {
+          "name": "software_name",
+          "description": "Software name",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "license_count",
+          "description": "Number of licenses",
+          "type": "number",
+          "required": true
+        }
+      ],
+      "response_template": "##### Software Licenses Managed\n**Software Name:** {software_name}\n**License Count:** {license_count}\n\n{license_count} licenses for the software '{software_name}' have been successfully managed."
+    },
+    {
+      "name": "set_up_remote_desktop",
+      "description": "Set up remote desktop access for an employee.",
+      "parameters": [
+        {
+          "name": "employee_name",
+          "description": "Employee name",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Remote Desktop Setup\n**Employee Name:** {employee_name}\n\nRemote desktop access has been successfully set up for {employee_name}."
+    },
+    {
+      "name": "troubleshoot_hardware_issue",
+      "description": "Assist in troubleshooting hardware issues reported.",
+      "parameters": [
+        {
+          "name": "issue_description",
+          "description": "Description of the hardware issue",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Hardware Issue Resolved\n**Issue Description:** {issue_description}\n\nThe hardware issue described as '{issue_description}' has been successfully resolved."
+    },
+    {
+      "name": "manage_network_security",
+      "description": "Manage network security protocols.",
+      "parameters": [],
+      "response_template": "##### Network Security Managed\n\nNetwork security protocols have been successfully managed."
+    }
+  ]
+}

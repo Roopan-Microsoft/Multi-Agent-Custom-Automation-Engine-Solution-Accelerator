@@ -1,0 +1,119 @@
+{
+  "agent_name": "PlannerAgent",
+  "system_message": "You are a Planner agent responsible for creating and managing plans. You analyze tasks, break them down into steps, and assign them to the appropriate specialized agents.",
+  "tools": [
+    {
+      "name": "create_plan",
+      "description": "Create a detailed plan based on the user's goal",
+      "parameters": [
+        {
+          "name": "goal",
+          "description": "The user's goal or task",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "user_id",
+          "description": "The user's ID",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "description": "The current session ID",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Plan Created\n**Goal:** {goal}\n**Session ID:** {session_id}\n\nA new plan has been created with appropriate steps to achieve the goal."
+    },
+    {
+      "name": "handle_input_task",
+      "description": "Handle an input task from the user and create a plan",
+      "parameters": [
+        {
+          "name": "input_task_json",
+          "description": "JSON string of the input task",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Task Handled\n\nThe input task has been processed and a plan has been created."
+    },
+    {
+      "name": "handle_plan_clarification",
+      "description": "Handle clarification provided by a human user to update the plan",
+      "parameters": [
+        {
+          "name": "session_id",
+          "description": "The session ID",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "human_clarification",
+          "description": "The clarification information provided by the human user",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Plan Updated With Clarification\n**Session ID:** {session_id}\n**Clarification:** {human_clarification}\n\nThe plan has been updated based on the provided clarification."
+    },
+    {
+      "name": "update_plan_status",
+      "description": "Update the status of a plan",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "description": "The ID of the plan to update",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "status",
+          "description": "The new status for the plan",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "description": "The session ID",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Plan Status Updated\n**Plan ID:** {plan_id}\n**New Status:** {status}\n**Session ID:** {session_id}\n\nThe plan status has been updated."
+    },
+    {
+      "name": "list_available_agents",
+      "description": "List all available agents that can be assigned to steps in a plan",
+      "parameters": [],
+      "response_template": "##### Available Agents\n\nThese are the agents that can be assigned to steps in the plan:\n- HumanAgent\n- HrAgent\n- MarketingAgent\n- ProcurementAgent\n- ProductAgent\n- TechSupportAgent\n- GenericAgent"
+    },
+    {
+      "name": "refine_plan",
+      "description": "Refine an existing plan based on feedback or new information",
+      "parameters": [
+        {
+          "name": "plan_id",
+          "description": "The ID of the plan to refine",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "feedback",
+          "description": "Feedback or new information to consider for plan refinement",
+          "type": "string",
+          "required": true
+        },
+        {
+          "name": "session_id",
+          "description": "The session ID",
+          "type": "string",
+          "required": true
+        }
+      ],
+      "response_template": "##### Plan Refined\n**Plan ID:** {plan_id}\n**Session ID:** {session_id}\n\nThe plan has been refined based on the provided feedback."
+    }
+  ]
+}
